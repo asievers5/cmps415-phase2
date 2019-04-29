@@ -25,6 +25,7 @@ var tickets = [{
         "tags": ["school", "homework"]
     }];
 
+
 // Connect to the database before starting the application server.
 mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/test", function (err, client) {
   if (err) {
@@ -51,16 +52,11 @@ function handleError(res, reason, message, code) {
     res.status(code || 500).json({"error": message});
   }
 
+
 // GET https://polar-castle-32257.herokuapp.com/rest/list
 // returns list of tickets in memoryd
 router.get('/list', function(req, res) {
     res.status(200).send(tickets);
-});
-
-// GET https://polar-castle-32257.herokuapp.com/api/
-// returns root
-router.get('/', function(req, res) {
-    res.status(200).send("API Docs\n /list to list all tickets\n")
 });
 
 // POST http://localhost:8080/api/users
@@ -117,10 +113,3 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use('/rest', router);
 app.use('/api/ticket/:id', router);
-app.use('/', router);
-
-
-//Starts server listening on port {port}
-app.listen(port, function() {
-    console.log("Node app is running at localhost:" + port)
-  });
