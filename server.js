@@ -24,7 +24,7 @@ var tickets = [{
         "follower_ids": [123, 1],
         "tags": ["school", "homework"]
     }];
-    
+
 // Connect to the database before starting the application server.
 mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/test", function (err, client) {
   if (err) {
@@ -109,6 +109,8 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use('/rest', router);
 app.use('/api/ticket/:id', router);
+app.use('/', router);
+
 
 //Starts server listening on port {port}
 app.listen(port, function() {
