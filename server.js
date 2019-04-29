@@ -44,69 +44,31 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:2701
   });
 });
 
-// CONTACTS API ROUTES BELOW
+// Tickets API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
     console.log("ERROR: " + reason);
     res.status(code || 500).json({"error": message});
-  }
+}
 
 
-// GET https://polar-castle-32257.herokuapp.com/rest/list
-// returns list of tickets in memoryd
-router.get('/list', function(req, res) {
-    res.status(200).send(tickets);
+router.get("/api/tickets", function(req, res) {
 });
 
-// POST http://localhost:8080/api/users
-// parameters sent with 
-router.post('/ticket', function(req, res) {
-    var id = req.body.id;
-    var created_at = req.body.created_at;
-    var updated_at = req.body.updated_at;
-    var type = req.body.type;
-    var subject = req.body.subject;
-    var description = req.body.description;
-    var priority = req.body.priority;
-    var status = req.body.status;
-    var recipient = req.body.recipient;
-    var submitter = req.body.submitter;
-    var assignee_id = req.body.assignee_id;
-    var follower_ids = req.body.follower_ids;
-    var tags = req.body.tags;
-    var ticket = {
-        id,
-        created_at,
-        updated_at,
-        type,
-        subject,
-        description,
-        priority,
-        status,
-        recipient,
-        submitter,
-        assignee_id,
-        follower_ids,
-        tags
-        }
-    tickets.push(ticket);
-
-    res.send("POST Successfull");
+router.post("/api/tickets", function(req, res) {
 });
 
-router.get('/ticket/:id', function(req, res) {
-    for(var i = 0; i < tickets.length; i++){
-        if(tickets[i].id == req.params.id) {
-            sendjson = tickets[i];
-            break;
-        }
-        else {
-            sendjson = "Ticket not found";
-        }
-    }
-    res.status(200).send(sendjson);
+
+router.get("/api/tickets/:id", function(req, res) {
 });
+
+router.put("/api/tickets/:id", function(req, res) {
+});
+
+router.delete("/api/tickets/:id", function(req, res) {
+});
+
 
 //express.use() 
 app.use(bodyParser.json()); // support json encoded bodies
