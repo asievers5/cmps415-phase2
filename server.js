@@ -3,6 +3,12 @@ var app = express();
 var router = express.Router();
 var port = process.env.PORT || 8080;
 var bodyParser = require('body-parser');
+var mongodb = require('mongodb');
+var TICKETS_COLLECTION = "tickets";
+
+
+
+
 var tickets = [{
         "id": 1,
         "created_at" : "Andrew Sievers",
@@ -18,6 +24,24 @@ var tickets = [{
         "follower_ids": [123, 1],
         "tags": ["school", "homework"]
     }];
+    
+// Connect to the database before starting the application server.
+mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/test", function (err, client) {
+  if (err) {
+    console.log(err);
+    process.exit(1);
+  }
+
+  // Save database object from the callback for reuse.
+  db = client.db();
+  console.log("Database connection ready");
+
+  // Initialize the app.
+  var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  });
+});
 
 // GET https://polar-castle-32257.herokuapp.com/rest/list
 // returns list of tickets in memoryd
