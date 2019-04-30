@@ -20,30 +20,68 @@ mongoose
     console.log('MongoDB Not Connected');
   });
 
-var ticketss = [{
-        "id": 1,
-        "created_at" : "Andrew Sievers",
-        "updated_at" : "Math homework due",
-        "type": "homework",
-        "subject": "Math",
-        "description": "Really hard stuff from calculus",
-        "priority": "urgent",
-        "status": "incomplete",
-        "recipient": "Math teacher",
-        "submitter": "kc",
-        "assignee_id": 123,
-        "follower_ids": [123, 1],
-        "tags": ["school", "homework"]
-    }];
+  //create model based on ticketSChema
+let TicketModel = require('./ticket')
+let tick = new TicketModel({
+  name: "Andrew",
+  issue: "I suck at programming",
+  employeenum: 1
+})
 
+tick.save()
+  .then(doc => {
+    console.log()
+  })
+  .catch(err => {
+    console.error(err)
+  })
+
+tick = new TicketModel({
+  name: "KC",
+  issue: "School",
+  employeenum: 2
+})
+
+tick.save()
+  .then(doc => {
+    console.log()
+  })
+  .catch(err => {
+    console.error(err)
+  })
+
+// routes
 app.get('/', function(req, res){
   res.send("Hello world");
 });    
 
-router.get("/api/tickets/:id", function(req, res) {
+router.get('/tickets', function(req, res){
+  TicketModel.find(function(err, tickets) {
+    if (err) return console.error(err);
+    res.status(200).send(tickets)
+  });
 });
 
+router.get("/tickets/:id", function(req, res) {
+ TicketModel.find({
+   employeenum: req.params.id
+ }, function(err, obj) { res.send(obj)})
+});
+
+
+router.post("/tickets/", function(req,res) {
+  var addTicket = new TicketModel(req.body);
+
+  console.log(req.body);
+
+  addTicket.save()
+  .then(obj => {
+    res.send("Success")})
+  .catch(err => {
+  res.status(400).send("Failure to POST")})});
+
 router.put("/api/tickets/:id", function(req, res) {
+  
 });
 
 router.delete("/api/tickets/:id", function(req, res) {
