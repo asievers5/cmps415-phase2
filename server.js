@@ -34,7 +34,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:2701
     console.log(err);
     process.exit(1);
   }
-  
+
   // Save database object from the callback for reuse.
   db = client.db();
   console.log("Database connection ready");
@@ -67,7 +67,7 @@ app.get("/api/tickets", function(req, res) {
 
   app.post("/api/tickets", function(req, res) {
     var newTicket = req.body;
-    //newTicket.createDate = new Date();
+    newTicket.createDate = new Date();
 
       db.collection(TICKETS_COLLECTION).insertOne(newTicket, function(err, doc) {
         if (err) {
