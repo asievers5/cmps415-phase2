@@ -65,7 +65,7 @@ app.get("/api/tickets", function(req, res) {
 
   app.post("/api/tickets", function(req, res) {
     var newTicket = req.body;
-    newTicket.createDate = new Date();
+    //newTicket.createDate = new Date();
   
     if (!req.body.name) {
       handleError(res, "Invalid user input", "Must provide a name.", 400);
