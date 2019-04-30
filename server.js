@@ -53,11 +53,32 @@ function handleError(res, reason, message, code) {
 }
 
 
-router.get("/api/tickets", function(req, res) {
-});
+app.get("/api/tickets", function(req, res) {
+    db.collection(TICKETS_COLLECTION).find({}).toArray(function(err, docs) {
+      if (err) {
+        handleError(res, err.message, "Failed to get Tickets.");
+      } else {
+        res.status(200).json(docs);
+      }
+    });
+  });
 
-router.post("/api/tickets", function(req, res) {
-});
+  app.post("/api/tickets", function(req, res) {
+    var newTicket = req.body;
+    newTicket.createDate = new Date();
+  
+    if (!req.body.name) {
+      handleError(res, "Invalid user input", "Must provide a name.", 400);
+    } else {
+      db.collection(TICKETS_COLLECTION).insertOne(newTicket, function(err, doc) {
+        if (err) {
+          handleError(res, err.message, "Failed to create new ticket.");
+        } else {
+          res.status(201).json(doc.ops[0]);
+        }
+      });
+    }
+  });
 
 
 router.get("/api/tickets/:id", function(req, res) {
