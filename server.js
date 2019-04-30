@@ -5,6 +5,7 @@ var port = process.env.PORT || 8080;
 var bodyParser = require('body-parser');
 var mongodb = require('mongodb');
 var TICKETS_COLLECTION = "tickets";
+var ObjectID = mongodb.ObjectID;
 var db;
 
 
@@ -33,23 +34,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:2701
     console.log(err);
     process.exit(1);
   }
-  db.createCollection("tickets", function(err, res) {
-    if(err) throw err;
-    console.log("collection created!");
-    
-  })
-
-  /*
-  MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("mydb");
-    dbo.createCollection("customers", function(err, res) {
-      if (err) throw err;
-      console.log("Collection created!");
-      db.close();
-    });
-  });
-*/
+  
   // Save database object from the callback for reuse.
   db = client.db();
   console.log("Database connection ready");
