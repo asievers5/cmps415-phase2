@@ -66,10 +66,7 @@ app.get("/api/tickets", function(req, res) {
   app.post("/api/tickets", function(req, res) {
     var newTicket = req.body;
     //newTicket.createDate = new Date();
-  
-    if (!req.body.name) {
-      handleError(res, "Invalid user input", "Must provide a name.", 400);
-    } else {
+
       db.collection(TICKETS_COLLECTION).insertOne(newTicket, function(err, doc) {
         if (err) {
           handleError(res, err.message, "Failed to create new ticket.");
@@ -77,7 +74,6 @@ app.get("/api/tickets", function(req, res) {
           res.status(201).json(doc.ops[0]);
         }
       });
-    }
   });
 
 
