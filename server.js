@@ -9,7 +9,7 @@ var TICKETS_COLLECTION = "tickets";
 
 
 
-var tickets = [{
+var ticketss = [{
         "id": 1,
         "created_at" : "Andrew Sievers",
         "updated_at" : "Math homework due",
