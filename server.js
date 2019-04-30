@@ -22,33 +22,6 @@ mongoose
 
   //create model based on ticketSChema
 let TicketModel = require('./ticket')
-let tick = new TicketModel({
-  name: "Andrew",
-  issue: "I suck at programming",
-  employeenum: 1
-})
-
-tick.save()
-  .then(doc => {
-    console.log()
-  })
-  .catch(err => {
-    console.error(err)
-  })
-
-tick = new TicketModel({
-  name: "KC",
-  issue: "School",
-  employeenum: 2
-})
-
-tick.save()
-  .then(doc => {
-    console.log()
-  })
-  .catch(err => {
-    console.error(err)
-  })
 
 // routes
 app.get('/', function(req, res){
@@ -80,11 +53,24 @@ router.post("/tickets/", function(req,res) {
   .catch(err => {
   res.status(400).send("Failure to POST")})});
 
-router.put("/api/tickets/:id", function(req, res) {
-  
+router.put("/tickets/:id", function(req, res) {
+  TicketModel.findOneAndUpdate({employeenum: req.params.id }, req.body, function(err){
+    if (err) res.send(err)
+    else res.status(200).send("Success");
+  })
 });
 
-router.delete("/api/tickets/:id", function(req, res) {
+
+router.delete("/tickets/:id", function(req, res) {
+  /*
+  TicketModel.remove({}, function(err) {
+    console.log("removed");
+  })
+  */
+  TicketModel.findOneAndDelete({employeenum: req.params.id }, req.body, function(err){
+    if (err) res.send(err)
+    else res.status(200).send("Success");
+  })
 });
 
 
